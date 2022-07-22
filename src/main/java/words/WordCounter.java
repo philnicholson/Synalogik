@@ -160,7 +160,7 @@ public class WordCounter {
 					addWordToMap(singleWord);
 				}
 			} else {
-				addWordToMap(s);	
+				addWordToMap(removeNumberPunctuation(s));	
 			}
 		}
 	}
@@ -224,6 +224,25 @@ public class WordCounter {
 		return word;
 	}
 
+	
+	/**
+	 * Uses regular expressions to remove leading and training punctuation. 
+	 * Won't remove leading chars such as -, +, $, £
+	 * Won't remove trailing chars such as %
+	 * 
+	 * @param word	The word to remove leading and trailing punctuation from
+	 * @return String The word with punctuation removed, may be an empty string
+	 */	
+	private String removeNumberPunctuation(String number) {
+		// Leading punctuation
+		number = number.replaceAll("^[\\p{Punct}&&[^+-]]+", "");
+		
+		// Trailing punctuation
+		number = number.replaceAll("[\\p{Punct}&&[^%]]+$", "");
+		
+		return number;
+	}
+	
 	
 	/**
 	 * Calculates the average word length from all those found, to set number of decimal places.
