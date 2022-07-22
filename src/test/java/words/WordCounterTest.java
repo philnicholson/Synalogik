@@ -206,4 +206,46 @@ public class WordCounterTest {
 		assertEquals(wordLengthCountMap.get(15), 90);
 		assertEquals(wordLengthCountMap.get(14), 350);
 	}
+	
+	@Test
+	public void testNumbers() {
+		System.out.println("Testing testNumbers()");
+
+		String[] numbers = {"100", "100.9", "+200", "£300.00", "55%", "2000/01/01", "01-01-2000", "1000,999.0", "-1000,999.0", "V9.0", "(9999)", "****1234***", ">>>>11111<<<<<"};
+		String[] newNumbers = new String[numbers.length];
+		
+		for (int i=0; i<numbers.length; i++) {
+			newNumbers[i] = removePunctuation(numbers[i]);
+		}
+
+		assertEquals(newNumbers[0], numbers[0]);
+		assertEquals(newNumbers[1], numbers[1]);
+		assertEquals(newNumbers[2], numbers[2]);
+		assertEquals(newNumbers[3], numbers[3]);
+		assertEquals(newNumbers[4], numbers[4]);
+		assertEquals(newNumbers[5], numbers[5]);
+		assertEquals(newNumbers[6], numbers[6]);
+		assertEquals(newNumbers[7], numbers[7]);
+		assertEquals(newNumbers[8], numbers[8]);
+		assertEquals(newNumbers[9], numbers[9]);
+		assertEquals(newNumbers[10], "9999");
+		assertEquals(newNumbers[11], "1234");
+		assertEquals(newNumbers[12], "11111");
+	}
+	
+	/**
+	 * Copied from WordCount class - can call into private method to ensure actual code is used, but short on time...
+	 * 
+	 * @param number The number to remove punctuation from
+	 * @return String the number with leading and trailing punctuation removed. Might be an empty String
+	 */
+	private String removePunctuation(String number) {
+		// Leading punctuation
+		number = number.replaceAll("^[\\p{Punct}&&[^+-]]+", "");
+		
+		// Trailing punctuation
+		number = number.replaceAll("[\\p{Punct}&&[^%]]+$", "");
+		
+		return number;
+	}
 }
