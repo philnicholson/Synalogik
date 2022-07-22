@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.PatternSyntaxException;
 
 /**
  * Class to count 'words' in a text file.
@@ -137,7 +136,7 @@ public class WordCounter {
 	 * 
 	 * @param line The String of text to count words in
 	 */
-	private void processLine(String line) throws PatternSyntaxException {
+	private void processLine(String line) {
 		
 		// Use regex to split on white space (this will also trim)
 		String[] split = line.split("(\\s+)");
