@@ -110,10 +110,6 @@ public class WordCounter {
 		if (wordCount == 0) {
 			System.out.println("No words were found.");
 		} else {
-			// *** DEBUG CODE ***
-			//System.out.println("Found " + wordCount + " words\r\n");
-			//wordlengthCount.entrySet().stream().forEach( input -> System.out.println(input.getKey() + " : " + input.getValue()));
-			
 			// Calculate these now so further calls don't repeat the work
 			calcAverageWordLength();
 			
@@ -200,9 +196,6 @@ public class WordCounter {
 		int wordLength = word.length();
 		
 		if (wordLength > 0) {
-			
-			//System.out.println("WORD>> " + word);
-			
 			// Add to map of word length counts
 			wordlengthCount.merge(wordLength, 1, Integer::sum);
 			
@@ -231,39 +224,6 @@ public class WordCounter {
 		return word;
 	}
 
-	
-	/**
-	 * Checks full stops within a word to check if the 'word' is actual 2 words
-	 * 
-	 * Examples:
-	 *  one.Two		= one	Two
-	 *  one.(Two	= one 	Two
-	 *  10.Then		= 10 	Then
-	 *  end.10		= end 	10
-	 *  end...Today = end  Today
-	 *  10.9		= 10.9			(Don't break numbers!)
-	 *  
-	 * @param word	The word to check
-	 * @return String[] 1 word or 2 words if split
-	 */
-	private String[] checkFullStops(String word) {
-		String[] words = new String[2];
-
-		// Check for decimal numbers
-		boolean isNumber = word.matches("[\\d][\\.{1}][\\d]");
-
-		if (isNumber) {
-			words[0] = word;
-		} else {
-			words = word.split("[\\.]+");
-			//System.out.println("SPLIT: " + word + " -> 1) " + words[0] + " and " + words[1]);
-//			for (int i=0; i<words.length; i++) {
-//				System.out.println(words[i]);
-//			}
-		}
-		return words;
-	}
-	
 	
 	/**
 	 * Calculates the average word length from all those found, to set number of decimal places.
@@ -327,7 +287,7 @@ public class WordCounter {
 	 * 
 	 * @return int Most times a word length was found, or 0 if no words found
 	 */
-	public int getHighestWordLengthCount() {
+	public int getWordLengthHighestCount() {
 		return modeCount;
 	}
 	

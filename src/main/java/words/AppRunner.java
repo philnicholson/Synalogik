@@ -26,10 +26,10 @@ public class AppRunner {
 			System.out.println("Number of words of length " + k + " is " + v);
 		}); 
 		
-		System.out.println("The most frequently occurring word length is " + wc.getHighestWordLengthCount() + ", for word lengths of " + wc.getMostFreqWordLengthsAsString());
+		System.out.println("The most frequently occurring word length is " + wc.getWordLengthHighestCount() + ", for word lengths of " + wc.getMostFreqWordLengthsAsString());
 		
 		System.out.println("\nOr, more correctly:");
-		System.out.println("The most frequently occurring word length(s) of " + wc.getMostFreqWordLengthsAsString() + ", occurred " +  wc.getHighestWordLengthCount() + " times");;
+		System.out.println("The most frequently occurring word length(s) of " + wc.getMostFreqWordLengthsAsString() + ", occurred " +  wc.getWordLengthHighestCount() + " times");;
 	}
 
 }

@@ -13,8 +13,6 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Class to perform Junit tests against the WordCounter class.
@@ -87,7 +85,7 @@ public class WordCounterTest {
 		// Check against results supplied by Snyalogik
 		assertEquals(wc.getWordCount(), 9);
 		assertEquals(wc.getAverageWordLength(), 4.556);
-		assertEquals(wc.getHighestWordLengthCount(), 2);
+		assertEquals(wc.getWordLengthHighestCount(), 2);
 		assertEquals(wc.getMostFreqWordLengthsAsString(), "4 & 5");
 		
 		Map<Integer,Integer> wordLengthCountMap = wc.getMapWordLengthCount();
@@ -174,7 +172,7 @@ public class WordCounterTest {
 		// Check against results supplied by Snyalogik
 		assertEquals(wc.getWordCount(), 0);
 		assertEquals(wc.getAverageWordLength(), 0.000);
-		assertEquals(wc.getHighestWordLengthCount(), 0);
+		assertEquals(wc.getWordLengthHighestCount(), 0);
 		assertEquals(wc.getMostFreqWordLengthsAsString(), "");
 		
 		Map<Integer,Integer> wordLengthCountMap = wc.getMapWordLengthCount();
@@ -196,7 +194,7 @@ public class WordCounterTest {
 		// Can check against my results, but don't know if 100% correct results here
 		assertEquals(wc.getWordCount(), 793120);
 		assertEquals(wc.getAverageWordLength(), 4.084);
-		assertEquals(wc.getHighestWordLengthCount(), 221409);
+		assertEquals(wc.getWordLengthHighestCount(), 221409);
 		assertEquals(wc.getMostFreqWordLengthsAsString(), "3");
 		
 		// Large word sizes have been checked
