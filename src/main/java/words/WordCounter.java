@@ -1,15 +1,17 @@
 package words;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * Class to count 'words' in a text file.
@@ -53,7 +55,7 @@ public class WordCounter {
 		
 
 	/**
-	 * Default constuctor, requires further call to processFile().
+	 * Default constructor, requires further call to processFile().
 	 * 
 	 */
 	public WordCounter() {
@@ -62,7 +64,7 @@ public class WordCounter {
 	
 	
 	/**
-	 * Constuctor that takes a filename of a text file to parse.
+	 * Constructor that takes a filename of a text file to parse.
 	 * 
 	 * @param filename	Name of the file to count words from
 	 */
@@ -74,6 +76,7 @@ public class WordCounter {
 		} 
 	}
 	
+	
 	/**
 	 * Reads in a file and calculates the number of words, average length and most occurring word lengths.
 	 * 
@@ -82,20 +85,34 @@ public class WordCounter {
 	public void processFile(String filename) {
 			
 		resetValues();
-		
-		try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-			String line = reader.readLine();
-			
-			while (line != null) {	
-				processLine(line);
-				line = reader.readLine();
-			}	
-		} catch (FileNotFoundException e) {
-			System.out.println("File: " + filename + " not found.");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
 
+		Path path = Paths.get(filename);
+		
+		try (Stream<String> lines = Files.lines(path)) {
+			
+			lines.flatMap(line -> Arrays.stream(line.split("(\\s+)")))
+		    	.forEach(w -> {
+		    		if (!hasDigits(w)) {
+						String[] words;
+						
+						if (!isEmailAddress(w)) {
+							// Split on full-stop in case of missing space i.e. "done.Today" or "end.(Next"
+							words = w.split("\\.");
+						} else {
+							words = new String[] {w};
+						}
+						for (String word : words) {
+							String singleWord = removePunctuation(word);
+							addWordToMap(singleWord);
+						}
+					} else {
+						addWordToMap(removeNumberPunctuation(w));	
+					}
+		    	});
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+		
 		if (wordCount == 0) {
 			System.out.println("No words were found.");
 		} else {
@@ -118,40 +135,6 @@ public class WordCounter {
 		averageWordLength = 0.0;
 		modeCount = 0;
 		modes.clear();
-	}
-	
-	
-	/**
-	 * Splits a String into 'words', removes punctuation characters and counts words.
-	 * 
-	 * @param line The String of text to count words in
-	 */
-	private void processLine(String line) {
-		
-		// Use regex to split on white space (this will also trim)
-		String[] split = line.split("(\\s+)");
-		
-		// For every 'word' found...
-		for (String s : split) {
-
-			// Deal with simple words first
-			if (!hasDigits(s)) {
-				String[] words;
-				
-				if (!isEmailAddress(s)) {
-					// Split on fullstop incase of missing space i.e. "done." or "end.Next"
-					words = s.split("\\.");
-				} else {
-					words = new String[] {s};
-				}
-				for (String word : words) {
-					String singleWord = removePunctuation(word);
-					addWordToMap(singleWord);
-				}
-			} else {
-				addWordToMap(removeNumberPunctuation(s));	
-			}
-		}
 	}
 
 	
@@ -332,7 +315,7 @@ public class WordCounter {
 //	/**
 //	 * Option method to get list of most frequently occurring word lengths as an int array
 //	 * 
-//	 * @return in[] An array containing the most frequently occuring word lengths
+//	 * @return in[] An array containing the most frequently occurring word lengths
 //	 */
 //	public int[] getMostFreqWordLengths() {
 //		int[] array = wordLengthsMostFreq.stream().mapToInt(Integer::intValue).toArray();
