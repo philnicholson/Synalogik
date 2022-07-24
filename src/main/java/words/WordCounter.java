@@ -96,8 +96,8 @@ public class WordCounter {
 						String[] words;
 						
 						if (!isEmailAddress(w)) {
-							// Split on full-stop in case of missing space i.e. "done.Today" or "end.(Next"
-							words = w.split("\\.");
+							// Split on char in case of missing space i.e. "done.Today" or "end.(Next" or "end?More" or "up!Down"
+							words = w.split("[\\.!?]");
 						} else {
 							words = new String[] {w};
 						}
