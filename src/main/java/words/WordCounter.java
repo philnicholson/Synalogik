@@ -80,12 +80,10 @@ public class WordCounter {
 	 * @param filename String of the filename to read in
 	 */
 	public void processFile(String filename) {
-		BufferedReader reader = null;
-		
+			
 		resetValues();
 		
-		try {
-			reader = new BufferedReader(new FileReader(filename));
+		try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
 			String line = reader.readLine();
 			
 			while (line != null) {	
@@ -96,15 +94,7 @@ public class WordCounter {
 			System.out.println("File: " + filename + " not found.");
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (reader != null) {
-					reader.close();
-				}
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		}		
+		} 
 
 		if (wordCount == 0) {
 			System.out.println("No words were found.");
