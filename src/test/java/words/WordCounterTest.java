@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Class to perform Junit tests against the WordCounter class.
+ * Class to perform JUnit tests against the WordCounter class.
  * 
  * @author PhilN
  *
@@ -39,7 +39,7 @@ public class WordCounterTest {
 
 	
 	/**
-	 * Test that the WordCounter can be instaniated without a filename, and that a further call process a file.
+	 * Test that the WordCounter can be instantiated without a filename, and that a further call process a file.
 	 */
 	@Test
 	public void testNewWordCounterConstructor() {
@@ -51,7 +51,7 @@ public class WordCounterTest {
 	}
 	
 	/**
-	 * Test that the WordCounter can be instaniated with a filename to process a file.
+	 * Test that the WordCounter can be instantiated with a filename to process a file.
 	 */
 	@Test
 	public void testNewWordCounterFileConstructor() {
@@ -118,7 +118,7 @@ public class WordCounterTest {
 	}
 	
 	/** 
-	 * Test for simple 'words' with fullstops. 
+	 * Test for simple 'words' with full stops. 
 	 * Fullstop at the end must be removed.
 	 * Fullstop in the middle should be split into multiple words.
 	 * 
