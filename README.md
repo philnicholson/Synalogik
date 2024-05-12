@@ -1,6 +1,6 @@
 # Coding test for Synalogik interview
 
-It can be cloned with: git clone -b master https://github.com/philnicholson/Synalogik.git
+It can be cloned with: <b>git clone -b master https://github.com/philnicholson/Synalogik.git</b>
 
 It can be built with Maven using: <b>mvn clean install</b><br>
 The site reports can be created with: <b>mvn clean site</b><br>
